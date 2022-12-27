@@ -26,7 +26,7 @@ module.exports.getUsersWithPostCount = async (req, res) => {
         }
       }
     ]);
-    let totalPages = Math.ceil(totalDocs/limit)
+    let totalPages = Math.ceil(totalDocs / limit);
     res.status(200).json({
       data: {
         users,
@@ -35,11 +35,11 @@ module.exports.getUsersWithPostCount = async (req, res) => {
           limit,
           page,
           totalPages,
-          pagingCounter: totalDocs-users.length,
-          hasPrevPage: (page <= 1)?false:true,
-          hasNextPage: (totalPages != page)?true:false,
-          prevPage: (page > 1)?page-1:null,
-          nextPage: totalPages-page
+          pagingCounter: (page * limit) - limit + 1,
+          hasPrevPage: (page <= 1) ? false : true,
+          hasNextPage: (totalPages > page) ? true : false,
+          prevPage: (page > 1) ? page - 1 : null,
+          nextPage: (totalPages > page) ? page + 1 : null
         }
       }
     });
